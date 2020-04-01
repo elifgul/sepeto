@@ -1,0 +1,35 @@
+name: sepeto
+description: Shopping List
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.15.6
+
+  cupertino_icons: ^0.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.6.1
+
+flutter_icons:
+  image_path: "icon.jpg"
+  android: true
+  ios: true
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icon.jpg
+    - assets/icon.png
+    - assets/sepeto_images/
+    - assets/slanted_menu.png
+
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: fonts/Rubik-Regular.ttf
+        - asset: fonts/Rubik-Medium.ttf
+          weight: 500
