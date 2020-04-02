@@ -34,7 +34,7 @@ class _SepetoState extends State<Sepeto> {
           onCategoryTap: _onCategoryTap,
         ),
         frontTitle: Text('SEPETO'),
-        backTitle: Text('MENU'),
+        backTitle: Text('MENÜ'),
       ),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,

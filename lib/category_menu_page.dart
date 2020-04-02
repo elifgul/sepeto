@@ -20,6 +20,8 @@ class CategoryMenuPage extends StatelessWidget {
     final categoryString = category.value;
     final ThemeData theme = Theme.of(context);
 
+    // It's a GestureDetector wrapping a Column whose children are the category names.
+    // An underline is used to indicate the selected category.
     return GestureDetector(
       onTap: () => onCategoryTap(category),
       child: category == currentCategory

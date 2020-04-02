@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'login.dart';
 import 'model/product.dart';
 
+// add a constant to represent the velocity we want our animation to have
 const double _kFlingVelocity = 2.0;
 
 class Backdrop extends StatefulWidget {
@@ -41,9 +42,10 @@ class _FrontLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.white,
       elevation: 16.0,
       shape: BeveledRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(46.0)),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +54,7 @@ class _FrontLayer extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: onTap,
             child: Container(
-              height: 40.0,
+              height: 30.0,
               alignment: AlignmentDirectional.centerStart,
             ),
           ),
@@ -153,6 +155,7 @@ class _BackdropState extends State<Backdrop>
 
   AnimationController _controller;
 
+  // method is only called once, before the widget is part of its render tree.
   @override
   void initState() {
     super.initState();
@@ -162,7 +165,7 @@ class _BackdropState extends State<Backdrop>
       vsync: this,
     );
   }
-
+ // method is also only called once, when the widget is removed from its tree for good.
   @override
   void didUpdateWidget(Backdrop old) {
     super.didUpdateWidget(old);
@@ -173,13 +176,12 @@ class _BackdropState extends State<Backdrop>
       _controller.fling(velocity: _kFlingVelocity);
     }
   }
-
+  // Add functions to get and change front layer visibility
   bool get _frontLayerVisible {
     final AnimationStatus status = _controller.status;
     return status == AnimationStatus.completed ||
         status == AnimationStatus.forward;
   }
-
   void _toggleBackdropLayerVisibility() {
     _controller.fling(
         velocity: _frontLayerVisible ? -_kFlingVelocity : _kFlingVelocity);
@@ -202,6 +204,8 @@ class _BackdropState extends State<Backdrop>
       end: RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0),
     ).animate(_controller.view);
 
+
+    // Wrap the backLayer in an ExcludeSemantics widget. This widget will exclude the backLayer's menu items from the semantics tree when the back layer isn't visible.
     return Stack(
       key: _backdropKey,
       children: <Widget>[
@@ -259,6 +263,7 @@ class _BackdropState extends State<Backdrop>
         ),
       ],
     );
+    // LayoutBuilder is a special widget whose builder callback provides size constraints.
     return Scaffold(
       appBar: appBar,
       body: LayoutBuilder(builder: _buildStack),
