@@ -2,6 +2,7 @@ library search_widget;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:sepeto/colors.dart';
 
 import 'no_item_found.dart';
 
@@ -31,7 +32,6 @@ class SearchWidget<T> extends StatefulWidget {
     @required this.selectedItemBuilder,
     @required this.queryBuilder,
     Key key,
-    this.selectedSetItemBuilder,
     this.onItemSelected,
     this.hideSearchBoxWhenItemSelected = false,
     this.listContainerHeight,
@@ -42,7 +42,6 @@ class SearchWidget<T> extends StatefulWidget {
   final List<T> dataList;
   final QueryListItemBuilder<T> popupListItemBuilder;
   final SelectedItemBuilder<T> selectedItemBuilder;
-  final SelectedSetItemBuilder<Set<T>> selectedSetItemBuilder;
   final bool hideSearchBoxWhenItemSelected;
   final double listContainerHeight;
   final QueryBuilder<T> queryBuilder;
@@ -62,6 +61,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
   bool isFocused;
   FocusNode _focusNode;
   ValueNotifier<T> notifier;
+  Set<ValueNotifier<T>> notifiers = {};
   bool isRequiredCheckFailed;
   Widget textField;
   OverlayEntry overlayEntry;
@@ -171,7 +171,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
                 ),
                 suffixIcon: Icon(Icons.search),
                 border: InputBorder.none,
-                hintText: "Search here...",
+                hintText: "Ne satın almak istersiniz?",
                 contentPadding: const EdgeInsets.only(
                   left: 16,
                   right: 20,
@@ -186,25 +186,25 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (widget.hideSearchBoxWhenItemSelected && notifier.value != null)
-          const SizedBox(height: 0)
-        else
           CompositedTransformTarget(
             link: _layerLink,
             child: textField,
           ),
-        if (notifier.value != null)
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: widget.selectedItemBuilder(
-              notifier.value,
-              onDeleteSelectedItem,
-            ),
-          ),
+        if (notifiers.isNotEmpty)
+         Column (children: notifiers.map((notifier) {
+           return Container (
+             margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
+             decoration: BoxDecoration(
+               color: orange50,
+               borderRadius: const BorderRadius.all(Radius.circular(4)),
+             ),
+             child: widget.selectedItemBuilder(
+               notifier.value,
+               onDeleteSelectedItem,
+             ),
+           );
+         }).toList()
+         )
       ],
     );
     return column;
@@ -219,6 +219,8 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
     _focusNode.unfocus();
     setState(() {
       notifier.value = item;
+      ValueNotifier<T> newNot = ValueNotifier(item);
+      notifiers.add(newNot);
       isFocused = false;
       isRequiredCheckFailed = false;
     });

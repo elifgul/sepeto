@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     bool show = true;
-    Product _selectedItem;
+    Set<Product> _selectedItems = {};
     List<Product> products = ProductsRepository.loadProducts(widget.category);
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   onItemSelected: (item) {
                     setState(() {
-                      _selectedItem = item;
+                      _selectedItems.add(item);
                     });
                   },
                 ),
@@ -121,6 +121,7 @@ class SelectedItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (selectedItem == null) return SizedBox(height: 0,);
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 2,
