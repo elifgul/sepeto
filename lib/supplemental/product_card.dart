@@ -38,7 +38,6 @@ class ProductCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // TODO(larche): Make headline6 when available
               Text(
                 product == null ? '' : product.name,
                 style: theme.textTheme.button,

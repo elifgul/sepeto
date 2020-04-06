@@ -4,6 +4,5 @@ Shopping list application.
 
 ## Photos of sepeto
 
-![alt tag](assets/screenshots/menu.png) 
-![alt tag](assets/screenshots/home.png) 
-
+<img src="https://github.com/elifgul/sepeto/blob/master/assets/screenshots/menu.png" height="300"/>
+<img src="https://github.com/elifgul/sepeto/blob/master/assets/screenshots/home.png" height="300"/>
