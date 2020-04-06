@@ -239,18 +239,6 @@ class _BackdropState extends State<Backdrop>
       actions: <Widget>[
         IconButton(
           icon: Icon(
-            Icons.search,
-            semanticLabel: 'login',
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-            );
-          },
-        ),
-        IconButton(
-          icon: Icon(
             Icons.near_me,
             semanticLabel: 'login',
           ),

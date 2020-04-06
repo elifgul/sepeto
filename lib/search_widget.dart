@@ -12,10 +12,6 @@ typedef SelectedItemBuilder<T> = Widget Function(
   T item,
   VoidCallback deleteSelectedItem,
 );
-typedef SelectedSetItemBuilder<T> = Widget Function(
-    Set<T> items,
-    VoidCallback deleteSelectedItem,
-    );
 typedef QueryBuilder<T> = List<T> Function(
   String query,
   List<T> list,
@@ -304,6 +300,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
   }
 
   void onDeleteSelectedItem() {
+    notifiers.remove(notifier);
     setState(() => notifier.value = null);
     if (widget.onItemSelected != null) {
       widget.onItemSelected(null);
