@@ -196,7 +196,13 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
              ),
              child: widget.selectedItemBuilder(
                notifier.value,
-               onDeleteSelectedItem,
+               () {
+                 notifiers.remove(notifier);
+                 setState(() => notifier.value = null);
+                 if (widget.onItemSelected != null) {
+                   widget.onItemSelected(null);
+                 }
+               },
              ),
            );
          }).toList()
@@ -297,14 +303,6 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
       },
     );
     Overlay.of(context).insert(overlayEntry);
-  }
-
-  void onDeleteSelectedItem() {
-    notifiers.remove(notifier);
-    setState(() => notifier.value = null);
-    if (widget.onItemSelected != null) {
-      widget.onItemSelected(null);
-    }
   }
 
   @override
