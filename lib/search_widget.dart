@@ -21,6 +21,8 @@ typedef TextFieldBuilder = Widget Function(
   FocusNode focus,
 );
 
+Set<String> selecetedSet = {};
+
 class SearchWidget<T> extends StatefulWidget {
   const SearchWidget({
     @required this.dataList,
@@ -198,6 +200,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
                notifier.value,
                () {
                  notifiers.remove(notifier);
+                 selecetedSet.remove(notifier.value.toString());
                  setState(() => notifier.value = null);
                  if (widget.onItemSelected != null) {
                    widget.onItemSelected(null);
@@ -223,6 +226,7 @@ class MySingleChoiceSearchState<T> extends State<SearchWidget<T>> {
       notifier.value = item;
       ValueNotifier<T> newNot = ValueNotifier(item);
       notifiers.add(newNot);
+      selecetedSet.add(item.toString());
       isFocused = false;
       isRequiredCheckFailed = false;
     });

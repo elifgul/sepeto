@@ -16,7 +16,6 @@ extension CategoryExtension on Category {
   }
 }
 
-
 class Product {
   const Product({
     @required this.category,
@@ -40,5 +39,5 @@ class Product {
   String get assetPackage => 'assets/sepeto_images';
 
   @override
-  String toString() => "$name (id=$id)";
+  String toString() => "$name";
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:share/share.dart';
 
-import 'login.dart';
 import 'model/product.dart';
+import 'search_widget.dart';
 
 // add a constant to represent the velocity we want our animation to have
 const double _kFlingVelocity = 2.0;
@@ -165,7 +166,8 @@ class _BackdropState extends State<Backdrop>
       vsync: this,
     );
   }
- // method is also only called once, when the widget is removed from its tree for good.
+
+  // method is also only called once, when the widget is removed from its tree for good.
   @override
   void didUpdateWidget(Backdrop old) {
     super.didUpdateWidget(old);
@@ -176,12 +178,14 @@ class _BackdropState extends State<Backdrop>
       _controller.fling(velocity: _kFlingVelocity);
     }
   }
+
   // Add functions to get and change front layer visibility
   bool get _frontLayerVisible {
     final AnimationStatus status = _controller.status;
     return status == AnimationStatus.completed ||
         status == AnimationStatus.forward;
   }
+
   void _toggleBackdropLayerVisibility() {
     _controller.fling(
         velocity: _frontLayerVisible ? -_kFlingVelocity : _kFlingVelocity);
@@ -203,7 +207,6 @@ class _BackdropState extends State<Backdrop>
           0.0, layerTop, 0.0, layerTop - layerSize.height),
       end: RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0),
     ).animate(_controller.view);
-
 
     // Wrap the backLayer in an ExcludeSemantics widget. This widget will exclude the backLayer's menu items from the semantics tree when the back layer isn't visible.
     return Stack(
@@ -240,13 +243,15 @@ class _BackdropState extends State<Backdrop>
         IconButton(
           icon: Icon(
             Icons.near_me,
-            semanticLabel: 'login',
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-            );
+            final RenderBox box = context.findRenderObject();
+            var mes = "";
+            selecetedSet.forEach((message) {mes = mes + message + ", ";});
+            Share.share(mes,
+                subject:
+                    "Alışveriş Listesi",
+                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
           },
         ),
       ],
