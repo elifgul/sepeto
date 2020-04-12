@@ -12,12 +12,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_launcher_icons: ^0.6.1
+  flutter_launcher_icons: ^0.7.2+1
   search_widget: ^1.0.2
   share: ^0.6.3+6
 
 flutter_icons:
-  image_path: "icon.jpg"
+  image_path: "assets/icon.jpg"
   android: true
   ios: true
 
